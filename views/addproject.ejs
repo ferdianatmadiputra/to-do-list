@@ -1,0 +1,30 @@
+<%- include('partials/navbar-login'); %> 
+
+<h2>Create New Project</h2>
+    <form action="/project/new" method="POST">
+        <div class="mb-3 form-floating">
+            <input type="text" name="name" id="name" required class="col-sm-6 form-control" placeholder="budi">
+            <label for="name" class="col-form-label">
+                Project Name
+            </label>
+        </div>
+        <div class="mb-3 form-floating">
+            <input type="text" name="collaborator" id="collaborator" list="listUser" class="col-sm-6 form-control" placeholder="ap@emailmu.com">
+            <label for="collaborator" class="col-form-label">
+                Add Collaborator
+            </label>
+            <datalist id="listUser">
+                <%for (let i =0; i< users.length; i++){%>
+                    <%if (users[i].id !== currentUser){%>
+                        <option value="<%=users[i].username%>">
+                    <%}%>
+                <%}%>
+            </datalist>
+        </div>
+        
+        <div>
+            <input type="submit" id="submit" class="btn btn-primary btn-md" value="Create New Project">
+        </div>
+    </form>
+
+<%- include('partials/footer') %>

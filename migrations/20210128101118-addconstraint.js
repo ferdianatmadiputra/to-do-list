@@ -12,7 +12,7 @@ module.exports = {
       fields: ['UserId'],
       type: 'foreign key',
       name: 'fkey_user_to_tasks',
-      references: { //Required field
+      references: { 
         table: 'Users',
         field: 'id'
       },
@@ -20,7 +20,43 @@ module.exports = {
       onUpdate: 'cascade'
     })
     .then(()=> {
-      return queryInterface.addConstraint()
+      return queryInterface.addConstraint('Tasks', {
+        fields: ['ProjectId'],
+        type: 'foreign key',
+        name: 'fkey_project_to_tasks',
+        references: { 
+          table: 'Projects',
+          field: 'id'
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+      })
+    })
+    .then(() => {
+      return queryInterface.addConstraint('UserProjects', {
+        fields: ['ProjectId'],
+        type: 'foreign key',
+        name: 'fkey_project_to_userprojects',
+        references: { 
+          table: 'Projects',
+          field: 'id'
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+      })
+    })
+    .then(() => {
+      return queryInterface.addConstraint('UserProjects', {
+        fields: ['UserId'],
+        type: 'foreign key',
+        name: 'fkey_user_to_userprojects',
+        references: { 
+          table: 'Users',
+          field: 'id'
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+      })
     })
   },
 
@@ -32,10 +68,18 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     return queryInterface
-    .removeConstraint('Schedules','constraint_fk_courses')
+    .removeConstraint('Tasks','fkey_user_to_tasks')
     .then(()=>{
       return queryInterface
-      .removeConstraint('Schedules','constraint_fk_students')
+      .removeConstraint('Tasks','fkey_project_to_tasks')
+    })
+    .then(()=>{
+      return queryInterface
+      .removeConstraint('UserProjects','fkey_project_to_userprojects')
+    })
+    .then(()=>{
+      return queryInterface
+      .removeConstraint('UserProjects','fkey_user_to_userprojects')
     })
   }
 };

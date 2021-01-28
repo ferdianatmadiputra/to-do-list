@@ -1,0 +1,17 @@
+<%- include('partials/navbar-login'); %> 
+
+<h2>Edit Project Name</h2>
+    <form action="/project/editname/<%=project.id%>" method="POST">
+        <div class="mb-3 form-floating">
+            <input type="text" name="name" id="name" required class="col-sm-6 form-control" placeholder="budi" 
+            value="<%=project.name%>">
+            <label for="name" class="col-form-label">
+                Project Name
+            </label>
+        </div>
+        
+        <div>
+            <input type="submit" id="submit" class="btn btn-primary btn-md" value="Update">
+        </div>
+    </form>
+<%- include('partials/footer'); %>

@@ -1,0 +1,24 @@
+<%- include('partials/navbar-login'); %> 
+
+<h2>Add Collaborator for Project <%=projectname%></h2>
+    <form action="/project/addcollaborator/<%=projectid%>" method="POST">
+        <div class="mb-3 form-floating">
+            <input type="text" name="collaborator" id="collaborator" list="listUser" class="col-sm-6 form-control" placeholder="ap@emailmu.com">
+            <label for="collaborator" class="col-form-label">
+                Add Collaborator
+            </label>
+            <datalist id="listUser">
+                <%for (let i =0; i< users.length; i++){%>
+                    <%if (users[i].id !== currentUser){%>
+                        <option value="<%=users[i].username%>">
+                    <%}%>
+                <%}%>
+            </datalist>
+        </div>
+        
+        <div>
+            <input type="submit" id="submit" class="btn btn-primary btn-md" value="Update">
+        </div>
+    </form>
+
+<%- include('partials/footer') %>
