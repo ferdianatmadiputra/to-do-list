@@ -18,7 +18,7 @@ router.post('/project/editname/:projectid', Controller.postEditProject);
 
 // create task feature on going
 router.get('project/addtask/:projectid', Controller.getAddTask);
-router.port('project/addtask/:projectid', Controller.postAddTask);
+router.post('project/addtask/:projectid', Controller.postAddTask);
 
 
 

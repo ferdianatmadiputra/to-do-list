@@ -7,7 +7,7 @@ class Controller {
             include:  [ Project , Task ] 
         })
         .then((data)=> {
-            console.log(JSON.stringify(data, null, 2));
+            // console.log(JSON.stringify(data, null, 2));
             res.render('home', {
                 user: data,
                 projects: data.Projects,
@@ -28,7 +28,7 @@ class Controller {
             console.log(JSON.stringify(data, null, 2));
 
             res.render('addproject', {
-                currentUser: 3,
+                currentUser: userId,
                 users: data
             })
         })
@@ -156,18 +156,18 @@ class Controller {
             console.log(JSON.stringify(project.Users, null, 2));
             res.render('projectpage', {
                 project: project,
-                collaborators: project.Users
+                collaborators: project.Users,
+                task: project.Tasks
             })
-
         })
     }
 
     static getAddTask(req,res){
         let projectid = req.params.projectid;
-        let validation = req.query.error;
+        let validation = req.query.valid;
         User.findByPk(req.session.user)
         .then((data)=> {
-            res.render('formAddTask',{
+            res.render('formaddtask',{
                 projectid: projectid,
                 validation:validation,
                 task: {
@@ -182,11 +182,26 @@ class Controller {
 
     static postAddTask(req, res){
         let projectid = req.params.projectid;
-        
+        let username = req.body.UserId;
         let newTask = {
             task_name: req.body.name,
-            status: req.body.status
+            status: req.body.status,
+            ProjectId: projectid
         }
+        User.findOne({
+            where: {username: username}
+          })
+        .then((data)=> {
+            if(data){
+                newTask.UserId = data.id
+                return Task.create(newTask)
+            } else {
+                res.redirect(`/project/addtask/${projectid}?valid=no`)
+            }
+        })
+        .then(()=>{
+            res.redirect(`/project/${projectid}`)
+        })
         
     }
 
