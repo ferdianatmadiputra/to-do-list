@@ -1,5 +1,6 @@
 const { Project, User, Task, UserProject} = require('../models')
 const { compare } = require('../helpers/bcrypt');
+const nodemailtodo = require('../helpers/send_email');
 
 class UserController{
     static getLogin(req, res) {
@@ -43,7 +44,8 @@ class UserController{
         console.log('masuk controller')
         User.create(newUser)
         .then(()=> {
-            console.log('sudah created lho')
+            console.log('sudah created lho');
+            nodemailtodo(req.body.email);
             res.redirect('/user/login')
         })
         .catch((err)=> {

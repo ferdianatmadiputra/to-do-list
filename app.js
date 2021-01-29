@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const index = require('./routes/index.js');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 4000;
 
 
 app.set('view engine','ejs');
@@ -16,5 +16,5 @@ app.use(session({
 app.use('/', index);
 
 app.listen(port, () => {
-    console.log('open localhost:', port);
+    console.log('APP START ON:', port);
 })

@@ -1,5 +1,4 @@
 const { Project, User, Task, UserProject} = require('../models')
-const { compare } = require('../helpers/bcrypt');
 
 class Controller {
     static getRootHandler (req,res) {
