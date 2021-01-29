@@ -19,6 +19,11 @@
         <div>
             <input type="submit" id="submit" class="btn btn-primary btn-md" value="Update">
         </div>
+        <%if (validation === 'no') {%>
+            <div class="alert alert-danger mb-3" role="alert">
+                Please input correct username
+            </div>
+        <%}%>
     </form>
 
 <%- include('partials/footer') %>

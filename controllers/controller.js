@@ -63,6 +63,7 @@ class Controller {
         let projectid = req.params.projectid;
         let project;
         let userId = req.session.user;
+        let validation = req.query.userpresence;
         
         Project.findByPk(projectid)
         .then((data)=> {
@@ -75,7 +76,8 @@ class Controller {
                 projectname: project.name,
                 projectid: projectid,
                 users: users,
-                currentUser : userId
+                currentUser : userId,
+                validation : validation
             })
         })
         .catch(err=>res.send(err));
@@ -90,15 +92,20 @@ class Controller {
             }
         })
         .then((data)=>{
-            return UserProject.create({
-                UserId: data.id,
-                ProjectId: projectid
-            })
+            if (!data) {
+                res.redirect(`/project/addcollaborator/${projectid}?userpresence=no`)
+            } else {
+                return UserProject.create({
+                    UserId: data.id,
+                    ProjectId: projectid
+                })
+            }
         })
         .then(()=> {
             res.redirect(`/project/${projectid}`)
         })
         .catch(err => {
+            console.log(err);
             res.send(err)
         })
     }
@@ -156,7 +163,31 @@ class Controller {
     }
 
     static getAddTask(req,res){
-        res.render('formAddTask') //todo
+        let projectid = req.params.projectid;
+        let validation = req.query.error;
+        User.findByPk(req.session.user)
+        .then((data)=> {
+            res.render('formAddTask',{
+                projectid: projectid,
+                validation:validation,
+                task: {
+                    status: '',
+                    name: '',
+                    Assignee: data.username
+                }
+            }) 
+        })
+        .catch((err)=> res.send(err));
+    }
+
+    static postAddTask(req, res){
+        let projectid = req.params.projectid;
+        
+        let newTask = {
+            task_name: req.body.name,
+            status: req.body.status
+        }
+        
     }
 
 }

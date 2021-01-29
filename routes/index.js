@@ -16,8 +16,9 @@ router.get('/project/delete/:projectid', Controller.getDelProject);
 router.get('/project/editname/:projectid', Controller.getEditProject);
 router.post('/project/editname/:projectid', Controller.postEditProject);
 
-//start dari form create task
-router.get('/addtask', Controller.getAddTask);
+// create task feature on going
+router.get('project/addtask/:projectid', Controller.getAddTask);
+router.port('project/addtask/:projectid', Controller.postAddTask);
 
 
 

@@ -4,7 +4,10 @@ const nodemailtodo = require('../helpers/send_email');
 
 class UserController{
     static getLogin(req, res) {
-        res.render('login')
+        let error = req.query.error
+        res.render('login',{
+            error: error
+        })
     }
 
     static postLogin(req,res) {
@@ -19,7 +22,7 @@ class UserController{
                 req.session.user = user.id;
                 res.redirect(`/home`);
             } else {
-                res.redirect('/user/login')
+                res.redirect('/user/login?error=true')
             }
         })
         .catch(err => {

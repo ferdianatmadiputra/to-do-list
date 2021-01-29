@@ -1,0 +1,57 @@
+<%- include('partials/navbar-login'); %> 
+
+<h2>Add New Task</h2>
+    <form action="/project/addtask/<%=projectid%>" method="POST">
+        <div class="mb-3 form-floating">
+            <input type="text" name="name" id="name" required class="col-sm-6 form-control" placeholder="budi" 
+            >
+            <label for="name" class="col-form-label">
+                Task name
+            </label>
+        </div>
+        <div class="mb-3 form-floating">
+            <input type="text" name="UserId" id="UserId" required class="col-sm-6 form-control" placeholder="budi" 
+            >
+            <label for="UserId" class="col-form-label">
+                Assignee
+            </label>
+        </div>
+        <fieldset class="mb-3">
+            <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+            <div class="btn-group col-sm-4" role="group" aria-label="Basic radio toggle button group">
+
+              <input type="radio" class="btn-check" name ="status" value="todo" id="todo" 
+              <% if (task.status === "todo"){%>
+                checked
+              <%}%>
+              >
+              <label for="todo" class="btn btn-outline-dark">Todo</label>
+
+              <input type="radio" class="btn-check" name ="status" value="doing" id="doing"
+              <% if (task.status === "doing"){%>
+                checked
+              <%}%>
+              >
+              <label for="doing" class="btn btn-outline-dark">Doing</label>
+
+              <input type="radio" class="btn-check" name ="status" value="done" id="done"
+              <% if (task.status === "done"){%>
+                checked
+              <%}%>
+              >
+              <label for="done" class="btn btn-outline-dark">Done</label>
+            </div>
+          </fieldset>
+
+        <div>
+            <input type="submit" id="submit" class="btn btn-primary btn-md" value="Create">
+        </div>
+    </form>
+
+    <%if (validation === 'no') {%>
+        <div class="alert alert-danger mb-3" role="alert">
+            Please input correct username
+        </div>
+    <%}%>
+
+<%- include('partials/footer'); %>
